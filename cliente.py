@@ -62,6 +62,8 @@ def clientTCP(message):
 if __name__ == "__main__":
 
     print('Exemplo: 10 + 5')
-    message = input("Digite a operação no formato do exemplo acima:")
+    print("Digite a operação no formato do exemplo acima:")
+    message = '20 + 10'
+    print(f"Equação = {message}")
     clientTCP(message)
     clientUDP(message)
