@@ -20,6 +20,7 @@ def clientUDP(message):
 
         print("----------------------------------")
         print(f"A resposta é: {response.decode()}")
+        print("----------------------------------")
 
         endTime = time.time()
 
@@ -49,6 +50,7 @@ def clientTCP(message):
 
         print("----------------------------------")
         print(f"A resposta é: {response.decode()}")
+        print("----------------------------------")
 
         endTime = time.time()
 
