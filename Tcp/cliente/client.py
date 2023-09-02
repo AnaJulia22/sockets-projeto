@@ -10,8 +10,10 @@ def clientTCP():
 
     print('Conectado')
     while True:
+
         print('Exemplo: 10 + 5')
         message = input("Digite a operação no formato do exemplo acima:")
+
         if message == "fim":
             break
         startTime = time.time()
@@ -19,13 +21,15 @@ def clientTCP():
         clientSocket.send(message.encode())
 
         response = clientSocket.recv(1024)
+
         print("----------------------------------")
-        print(response.decode())
         print(f"A resposta é: {response.decode()}")
+
         endTime = time.time()
-        print('Digite fim para finalizar a conexão')
 
         print(f"Total time taken: {endTime - startTime:.6f} seconds")
+
+        print('Digite fim para finalizar a conexão')
 
     clientSocket.close()
 

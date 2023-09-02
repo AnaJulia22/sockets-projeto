@@ -47,6 +47,6 @@ def serverTCP():
         clientSocket.send(resposta.encode())
         print('Resposta enviada')
 
-        clientSocket.close()
+    clientSocket.close()
 
 serverTCP()

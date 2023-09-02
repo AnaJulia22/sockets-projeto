@@ -1,27 +1,35 @@
 import socket
 import time
 
-def clientUDP(message):
+def clientUDP():
     serverIp = "127.0.0.1"
     serverPort = 54321
 
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    startTime = time.time()
-    clientSocket.sendto(message.encode(), (serverIp, serverPort))
+    while True:
 
-    with open(message, 'wb') as file:
-        while True:
-            response, _ = clientSocket.recvfrom(1024)
-            if not response:
-                break
-            file.write(response)
+        print('Exemplo: 10 + 5')
+        message = input("Digite a operação no formato do exemplo acima:")
 
-    endTime = time.time()
+        if message == "fim":
+            break
 
-    print(f"UDP server response: {response.decode()}")
-    print(f"Total time taken: {endTime - startTime:.6f} seconds")
+        startTime = time.time()
+
+        clientSocket.sendto(message.encode(), (serverIp, serverPort))
+
+        response, _ = clientSocket.recvfrom(1024)
+
+        print("----------------------------------")
+        print(f"A resposta é: {response.decode()}")
+
+        endTime = time.time()
+
+
+        print(f"Total time taken: {endTime - startTime:.6f} seconds")
+        print('Digite fim para finalizar a conexão')
 
     clientSocket.close()
-message = input('>>>')
-clientUDP(message)
+
+clientUDP()
