@@ -1,7 +1,7 @@
 import socket
 import time
 
-def clientTCP(message):
+def clientTCP():
     serverIp = "127.0.0.1"
     serverPort = 12345
 
@@ -9,22 +9,25 @@ def clientTCP(message):
     clientSocket.connect((serverIp, serverPort))
 
     print('Conectado')
+    while True:
+        print('Exemplo: 10 + 5')
+        message = input("Digite a operação no formato do exemplo acima:")
+        if message == "fim":
+            break
+        startTime = time.time()
 
-    startTime = time.time()
-    clientSocket.send(message.encode())
+        clientSocket.send(message.encode())
 
-    with open(message, 'wb') as file:
-        while 1:
-            response = clientSocket.recv(1024)
-            if not response:
-                break
-            file.write(response)
-    endTime = time.time()
+        response = clientSocket.recv(1024)
+        print("----------------------------------")
+        print(response.decode())
+        print(f"A resposta é: {response.decode()}")
+        endTime = time.time()
+        print('Digite fim para finalizar a conexão')
 
-    print(f"TCP server response: {response.decode()}")
-    print(f"Total time taken: {endTime - startTime:.6f} seconds")
+        print(f"Total time taken: {endTime - startTime:.6f} seconds")
 
     clientSocket.close()
 
-message = input('escreva um nome de arquivo:')
-clientTCP(message)
+
+clientTCP()
