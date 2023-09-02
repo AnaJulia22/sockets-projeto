@@ -11,12 +11,12 @@ def clientUDP(message):
 
         print(f"Equação = {equacao}")
 
-        startTime = time.time()
+        startTime = time.perf_counter()
 
         clientSocket.sendto(equacao.encode(), (serverIp, serverPort))
         response, _ = clientSocket.recvfrom(1024)
 
-        endTime = time.time()
+        endTime = time.perf_counter()
 
         print("----------------------------------")
         print(f"A resposta é: {response.decode()}")

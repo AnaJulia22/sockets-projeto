@@ -13,12 +13,12 @@ def clientTCP(message):
 
         print(f"Equação = {equacao}")
 
-        startTime = time.time()
+        startTime = time.perf_counter()
 
         clientSocket.send(equacao.encode())
         response = clientSocket.recv(1024)
 
-        endTime = time.time()
+        endTime = time.perf_counter()
 
         print("----------------------------------")
         print(f"A resposta é: {response.decode()}")
