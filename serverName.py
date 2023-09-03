@@ -13,10 +13,15 @@ def main():
 
     while True:
         data, client_address = server_socket.recvfrom(1024)
+        print(f"Conexão estabelecida com {client_address}")
         if data.decode() == "servidorTCP":
-            print(data.decode())
-            print(services)
             name = "servidorTCP"
+            if name in services:
+                host, port = services[name]
+                response = f"{name}:{host}:{port}"
+                server_socket.sendto(response.encode(), client_address)
+        elif data.decode() == "servidorUDP":
+            name = "servidorUDP"
             if name in services:
                 host, port = services[name]
                 response = f"{name}:{host}:{port}"
