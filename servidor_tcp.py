@@ -1,17 +1,55 @@
 import socket
+import threading
 
-serverIp = "127.0.0.1"
+serverIp = "localhost"
 serverPort = 12345
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverSocket.bind((serverIp, serverPort))
+print(f"TCP server listening on {serverIp}:{serverPort}")
 serverSocket.listen(1)
 
-print(f"TCP server listening on {serverIp}:{serverPort}")
+dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+dns_udp_client.bind((serverIp, serverPort))
+mensagem = "register servidorTCP localhost 12345"
+dns_udp_client.sendto(mensagem.encode(), ("localhost", 53))
+
+data, _ = dns_udp_client.recvfrom(1024)
+print(data)
+
 print("Esperando uma solicitação...")
 
+def calculadora(operacao):
 
-def serverTCP():
+    lista_operacao = operacao.split()
+
+    if lista_operacao == []:
+        resposta = 2
+        return resposta
+
+    print(lista_operacao)
+
+    num1 = int(lista_operacao[0])
+    num2 = int(lista_operacao[2])
+    sinal = lista_operacao[1]
+
+    if sinal == "+":
+        return num1 + num2
+    elif sinal == "-":
+        return num1 - num2
+    elif sinal == "/":
+        if num2 == 0:
+            return "Divisão por zero não é permitida."
+        return num1 / num2
+    elif sinal == "*":
+        return num1 * num2
+    elif sinal == "**":
+        return num1 ** num2
+    else:
+        return "Operação não suportada."
+
+
+def server_thread():
 
     clientSocket, clientAddress = serverSocket.accept()
     print(f"Conexão de {clientAddress}")
@@ -23,12 +61,23 @@ def serverTCP():
 
         print("Equação recebida")
 
-        resultado = eval(operacao)
-        resposta = str(resultado)
+        resposta = str(calculadora(operacao))
 
         clientSocket.send(resposta.encode())
         print('Resposta enviada')
 
+        if not data:
+            break
+
     clientSocket.close()
 
-serverTCP()
+server = threading.Thread(target=server_thread)
+server.start()
+
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    pass
+
+serverSocket.close()
