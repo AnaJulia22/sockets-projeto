@@ -6,16 +6,18 @@ def clientTCP(message):
     serverPort = 12346
 
     dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    dns_udp_client.bind((serverIp, serverPort))
+
     servico = "servidorTCP"
     dns_udp_client.sendto(servico.encode(), (serverIp, 53))
 
     ip = dns_udp_client.recvfrom(1024)
-    print(ip)
+
+    print("Requisição DNS feita")
+
     host = ip[0].decode()
     lista = host.split(":")
     enderecoIP, porta = str(lista[1]), int(lista[2])
-    print(enderecoIP)
+    print(f"Endereço e porta do servidor: {enderecoIP}:{porta}")
 
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect((enderecoIP, porta))

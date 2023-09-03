@@ -15,9 +15,12 @@ mensagem = "register servidorTCP localhost 12345"
 dns_udp_client.sendto(mensagem.encode(), ("localhost", 53))
 
 data, _ = dns_udp_client.recvfrom(1024)
-print(data)
+print(f"Conexão DNS estabelecida {_}")
 
+print(data.decode())
+print("----------------------------------")
 print("Esperando uma solicitação...")
+print("----------------------------------")
 
 def calculadora(operacao):
 
