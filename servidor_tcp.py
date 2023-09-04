@@ -62,6 +62,9 @@ def server_thread():
         data = clientSocket.recv(1024)
         operacao = data.decode()
 
+        if operacao == "fim":
+            break
+
         print("Equação recebida")
 
         resposta = str(calculadora(operacao))

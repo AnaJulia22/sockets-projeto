@@ -40,6 +40,8 @@ def clientUDP(message):
 
         print(f"Tempo total: {endTime - startTime:.6f} seconds")
 
+        print('Digite "fim" para finalizar a conexão')
+
     clientSocket.close()
 if __name__ == "__main__":
 
