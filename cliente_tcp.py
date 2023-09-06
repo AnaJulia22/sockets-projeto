@@ -5,12 +5,12 @@ def clientTCP(message):
     serverIp = "127.0.0.1"
     serverPort = 12346
 
-    dns_udp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    dns_tcp_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     servico = "servidorTCP"
-    dns_udp_client.sendto(servico.encode(), (serverIp, 53))
+    dns_tcp_client.sendto(servico.encode(), ("127.0.0.1", 5000))
 
-    ip = dns_udp_client.recvfrom(1024)
+    ip = dns_tcp_client.recvfrom(1024)
 
     print("Requisição DNS feita")
 
@@ -18,6 +18,10 @@ def clientTCP(message):
     lista = host.split(":")
     enderecoIP, porta = str(lista[1]), int(lista[2])
     print(f"Endereço e porta do servidor: {enderecoIP}:{porta}")
+
+    servico = "deletar servidorTCP"
+    dns_tcp_client.sendto(servico.encode(), ("127.0.0.1", 5000))
+    dns_tcp_client.close()
 
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect((enderecoIP, porta))
@@ -44,7 +48,8 @@ def clientTCP(message):
             print(f"Tempo total: {endTime - startTime:.6f} seconds")
             print("----------------------------------")
 
-            print('Digite "fim" para finalizar a conexão')
+    mensagem = input('Digite "fim" para finalizar a conexão: ').lower()
+    clientSocket.sendto(mensagem.encode(), (enderecoIP, porta))
 
     clientSocket.close()
 

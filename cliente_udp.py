@@ -5,17 +5,25 @@ def clientUDP(message):
     serverIp = "127.0.0.1"
     serverPort = 64321
 
-    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+    client_dns = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     servico = "servidorUDP"
-    clientSocket.sendto(servico.encode(), (serverIp, 53))
+    client_dns.sendto(servico.encode(), ("127.0.0.1", 5000))
 
-    ip = clientSocket.recvfrom(1024)
-    print(ip)
+    ip = client_dns.recvfrom(1024)
+
+    print("Requisição DNS feita")
+
     host = ip[0].decode()
     lista = host.split(":")
     enderecoIP, porta = str(lista[1]), int(lista[2])
+
+    servico = "deletar servidorUDP"
+    client_dns.sendto(servico.encode(), ("127.0.0.1", 5000))
     print(f"Endereço e porta do servidor: {enderecoIP}:{porta}")
+
+    client_dns.close()
+
+    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     print('Conectado')
     print("----------------------------------")
@@ -40,7 +48,8 @@ def clientUDP(message):
 
         print(f"Tempo total: {endTime - startTime:.6f} seconds")
 
-        print('Digite "fim" para finalizar a conexão')
+    mensagem = input('Digite "fim" para finalizar a conexão: ').lower()
+    clientSocket.sendto(mensagem.encode(), (enderecoIP, porta))
 
     clientSocket.close()
 if __name__ == "__main__":

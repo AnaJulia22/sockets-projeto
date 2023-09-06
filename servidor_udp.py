@@ -1,7 +1,7 @@
 import socket
 import threading
 
-serverIp = "localhost"
+serverIp = "127.0.0.1"
 serverPort = 54321
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -9,12 +9,16 @@ serverSocket.bind((serverIp, serverPort))
 
 print(f"UDP server listening on {serverIp}:{serverPort}")
 
-mensagem = "register servidorUDP localhost 54321"
-serverSocket.sendto(mensagem.encode(), ("localhost", 53))
-data, _ = serverSocket.recvfrom(1024)
+server_dns = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+mensagem = "register servidorUDP 127.0.0.1 54321"
+server_dns.sendto(mensagem.encode(), ("127.0.0.1", 5000))
+data, _ = server_dns.recvfrom(1024)
 
 print(f"Conexão DNS estabelecida {_}")
 print(data.decode())
+
+server_dns.close()
 
 print("----------------------------------")
 print("Esperando uma solicitação...")
@@ -69,10 +73,7 @@ def server_thread():
         serverSocket.sendto(resposta.encode(),clientAddress)
 
         print('Resposta enviada')
-
-        if not data:
-            break
-
+    print('Digite "Ctrl+c" para finalizar a conexão')
     serverSocket.close()
 
 server = threading.Thread(target=server_thread)
