@@ -58,6 +58,9 @@ def server_thread():
 
         operacao = data.decode()
 
+        if operacao == "fim":
+            break
+
         print("Equação recebida")
 
         resultado = calculadora(operacao)
