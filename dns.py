@@ -46,13 +46,14 @@ def server_thread():
                     host, port = services[name]
                     response = f"{name}:{host}:{port}"
             elif action == 'deletar':
-                del services[name]
-                print("----------------------------------")
-                print(f'Serviço {name} removido')
-                print(f"Serviços: {services}")
-                print("----------------------------------")
-                if len(services) == 0:
-                    break
+                if "servidorTCP" and "servidorUDP" in services:
+                    del services[name]
+                    print("----------------------------------")
+                    print(f'Serviço {name} removido')
+                    print(f"Serviços: {services}")
+                    print("----------------------------------")
+                    if len(services) == 0:
+                        break
 
         print(response)
         server_dns.sendto(response.encode(), client_address)
