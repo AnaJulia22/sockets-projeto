@@ -13,43 +13,35 @@ O repositório do projeto se encontra nesse link: https://github.com/AnaJulia22/
 
 Capturas dos terminais
 Servidor DNS
-<img src="">
+
+<img src="./capturas/dns.jpeg">
 
 
 Server UDP
 
-<img src="">
+<img src="./capturas/server_udp.jpeg">
 
 Client UDP
 
-<img src="">
+<img src="./capturas/cliente_udp.jpeg">
 
 Server TCP
 
-<img src="">
+<img src="./capturas/server_tcp.jpeg">
 
 Client TCP
 
-<img src="">
+<img src="./capturas/cliente_tcp.jpeg">
 
 
 Capturas wireshark
 
-<img src="">
-
-
-
-
-
-
-
-
-
+<img src="./capturas/ws1.jpeg">
 
 Nas primeiras linhas, os servidores fazem conexão com o dns, registrando seus nomes no dns. A partir da linha 11, a conexão cliente-servidor tcp se inicia e isso pode ser visto por causa do 3-way-handshake [syn], [syn,ack] e [ack]
 
-
+<img src="./capturas/ws2.jpeg">
 
 Finalizando a conexão tcp com [fin,ack], a conexão cliente-servidor udp se inicia
 
-
+<img src="./capturas/ws3.jpeg">
