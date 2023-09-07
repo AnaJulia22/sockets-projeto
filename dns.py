@@ -12,11 +12,11 @@ print("----------------------------------")
 def server_thread():
 
     services = {}
+    counter = 0
 
     while True:
         data, client_address = server_dns.recvfrom(1024)
-        print(f"Conexão estabelecida com {client_address}")
-        print("----------------------------------")
+
         if data.decode() == "servidorTCP":
             name = "servidorTCP"
             if name in services:
@@ -29,13 +29,15 @@ def server_thread():
                 host, port = services[name]
                 response = f"{name}:{host}:{port}"
                 server_dns.sendto(response.encode(), client_address)
+        elif data.decode() == '1':
+            counter += 1
+
         else:
 
             service_name = data.decode().split()
 
             action = service_name[0]
             name = service_name[1]
-            print(service_name)
 
             if action == 'register':
                 protocol, port = service_name[2], service_name[3]
@@ -45,18 +47,18 @@ def server_thread():
                 if name in services:
                     host, port = services[name]
                     response = f"{name}:{host}:{port}"
-            elif action == 'deletar':
-                if "servidorTCP" and "servidorUDP" in services:
-                    del services[name]
-                    print("----------------------------------")
-                    print(f'Serviço {name} removido')
-                    print(f"Serviços: {services}")
-                    print("----------------------------------")
-                    if len(services) == 0:
-                        break
+        if counter == 2:
+            break
 
         print(response)
         server_dns.sendto(response.encode(), client_address)
+
+    services.clear()
+    print("----------------------------------")
+    print(f'Serviço removidos')
+    print(f"Serviços: {services}")
+    print("----------------------------------")
+
     server_dns.close()
 
 server = threading.Thread(target=server_thread)

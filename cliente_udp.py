@@ -29,7 +29,7 @@ def clientUDP(message):
 
     for equacao in message:
 
-        print(f"Equação = {equacao}")
+
 
         startTime = time.perf_counter()
 
@@ -39,13 +39,13 @@ def clientUDP(message):
         endTime = time.perf_counter()
 
         print("----------------------------------")
+        print(f"Equação = {equacao}")
         print(f"A resposta é: {response.decode()}")
+        print(f"Tempo total: {endTime - startTime:.6f} seconds")
         print("----------------------------------")
 
-        print(f"Tempo total: {endTime - startTime:.6f} seconds")
-    servico = "deletar servidorUDP"
+    servico = '1'
     client_dns.sendto(servico.encode(), ("127.0.0.1", 5000))
-
     mensagem = input('Digite "fim" para finalizar a conexão: ').lower()
     clientSocket.sendto(mensagem.encode(), (enderecoIP, porta))
 
