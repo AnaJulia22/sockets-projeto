@@ -6,6 +6,7 @@ serverPort = 54321
 
 server_dns = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_dns.bind((serverIp, serverPort))
+
 mensagem = "register servidorUDP 127.0.0.1 54321"
 server_dns.sendto(mensagem.encode(), ("127.0.0.1", 5000))
 data, _ = server_dns.recvfrom(1024)
