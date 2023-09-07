@@ -13,6 +13,7 @@ data, _ = server_dns.recvfrom(1024)
 print(f"Conexão DNS estabelecida {_}")
 print(data.decode())
 
+
 server_dns.close()
 
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
