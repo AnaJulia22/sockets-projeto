@@ -19,10 +19,6 @@ def clientTCP(message):
     enderecoIP, porta = str(lista[1]), int(lista[2])
     print(f"Endereço e porta do servidor: {enderecoIP}:{porta}")
 
-    servico = "deletar servidorTCP"
-    dns_tcp_client.sendto(servico.encode(), ("127.0.0.1", 5000))
-    dns_tcp_client.close()
-
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect((enderecoIP, porta))
 
@@ -47,10 +43,13 @@ def clientTCP(message):
             print(f"A resposta é: {response.decode()}")
             print(f"Tempo total: {endTime - startTime:.6f} seconds")
             print("----------------------------------")
+    servico = "deletar servidorTCP"
+    dns_tcp_client.sendto(servico.encode(), ("127.0.0.1", 5000))
 
     mensagem = input('Digite "fim" para finalizar a conexão: ').lower()
     clientSocket.sendto(mensagem.encode(), (enderecoIP, porta))
 
+    dns_tcp_client.close()
     clientSocket.close()
 
 if __name__ == "__main__":

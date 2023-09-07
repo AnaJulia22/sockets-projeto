@@ -17,11 +17,7 @@ def clientUDP(message):
     lista = host.split(":")
     enderecoIP, porta = str(lista[1]), int(lista[2])
 
-    servico = "deletar servidorUDP"
-    client_dns.sendto(servico.encode(), ("127.0.0.1", 5000))
     print(f"Endereço e porta do servidor: {enderecoIP}:{porta}")
-
-    client_dns.close()
 
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -47,10 +43,13 @@ def clientUDP(message):
         print("----------------------------------")
 
         print(f"Tempo total: {endTime - startTime:.6f} seconds")
+    servico = "deletar servidorUDP"
+    client_dns.sendto(servico.encode(), ("127.0.0.1", 5000))
 
     mensagem = input('Digite "fim" para finalizar a conexão: ').lower()
     clientSocket.sendto(mensagem.encode(), (enderecoIP, porta))
 
+    client_dns.close()
     clientSocket.close()
 if __name__ == "__main__":
 
