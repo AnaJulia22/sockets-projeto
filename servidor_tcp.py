@@ -4,21 +4,22 @@ import threading
 serverIp = "127.0.0.1"
 serverPort = 12345
 
+dns_tcp_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+dns_tcp_server.bind((serverIp, serverPort))
+mensagem = "register servidorTCP 127.0.0.1 12345"
+dns_tcp_server.sendto(mensagem.encode(), ("127.0.0.1", 5000))
+data, _ = dns_tcp_server.recvfrom(1024)
+
+print(f"Conexão DNS estabelecida {_}")
+print(data.decode())
+
+dns_tcp_server.close()
+
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverSocket.bind((serverIp, serverPort))
 print(f"TCP server listening on {serverIp}:{serverPort}")
 serverSocket.listen(1)
 
-dns_tcp_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-dns_tcp_server.bind((serverIp, serverPort))
-mensagem = "register servidorTCP 127.0.0.1 12345"
-dns_tcp_server.sendto(mensagem.encode(), ("127.0.0.1", 5000))
-
-data, _ = dns_tcp_server.recvfrom(1024)
-print(f"Conexão DNS estabelecida {_}")
-
-print(data.decode())
-dns_tcp_server.close()
 print("----------------------------------")
 print("Esperando uma solicitação...")
 print("----------------------------------")
